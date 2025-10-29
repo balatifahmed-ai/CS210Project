@@ -9,14 +9,16 @@ public class Index {
         this.size = size;
     }
 
-    public Insert(String s) {}
+    public void Insert(String s) {}
 
-    public Remove(String s) {}
+    public void Remove(String s) {}
 
-    public Search(String s) {}
+    public void Search(String s) {}
 
-    public Traverse() {}
+    public void Traverse() {}
 
-    public String toString() {}
+    public String toString() {
+        return "";
+    }
     
 }

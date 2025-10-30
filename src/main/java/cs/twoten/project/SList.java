@@ -9,6 +9,8 @@ public class SList {
         this.size = size;
     }
 
+    public SList(){}
+
     public void Insert(String fileName, int lineNumber) {
         Node n = new Node();
         n.fileName = fileName;
@@ -59,14 +61,14 @@ public class SList {
     }
 
     public String toString() {
+        StringBuilder sb = new StringBuilder();
         Node cur = head;
-        String fullList = "";
         while (cur != null) {
-            fullList += cur.toString()+" ";
+            sb.append(cur);
             cur = cur.next;
         }
 
-        return fullList;
+        return sb.toString();
     }
 
 }

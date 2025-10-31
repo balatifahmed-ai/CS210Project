@@ -4,14 +4,19 @@ public class Index {
     AVLNode root;
     int size;
 
-    public Index(AVLNode root, int size) {
-        this.root = root;
-        this.size = size;
+    public Index() {
+        this.root = null;
+        this.size = 0;
     }
 
     public void Insert(String s) {
         if (s == null || s.isBlank() || s.isEmpty()) return;
-        root = BSTInsert(root, s);
+        root = BSTInsert(root, s, null, -1);
+    }
+
+    public void Insert(String s, String fileName, int lineNumber) {
+        if (s == null || s.isBlank() || s.isEmpty()) return;
+        root = BSTInsert(root, s, fileName, lineNumber);
     }
 
     public void Remove(String s) {
@@ -41,7 +46,7 @@ public class Index {
         StringBuilder sb = new StringBuilder();
         postOrder(root, sb);
         if (sb.length() > 0 && sb.charAt(sb.length() - 1) == ' ') sb.setLength(sb.length() - 1);
-        if (sb.length() == 0) System.out.println("Invalid Input"); else System.out.println(sb.toString());
+        System.out.println(sb.toString());
     }
 
     public String toString() {
@@ -109,26 +114,32 @@ public class Index {
         if (r.left != null) return Successor(r.left); else return r;
     }
 
-    private AVLNode BSTInsert(AVLNode r, String s) {
+    private AVLNode BSTInsert(AVLNode r, String s, String fileName, int lineNumber) {
         if (s == null || s.isEmpty()) return r;
         String key = normalize(s);
         if (r == null) {
             size++;
-        return new AVLNode(key, 1, 1, null, null, null);
+            SList lst = new SList();
+            if (fileName != null && lineNumber >= 0) lst.Insert(fileName, lineNumber);
+            return new AVLNode(key, 1, 1, lst, null, null);
         }
 
         int cmp = key.compareTo(r.token);
         if (cmp < 0) {
-        r.left = BSTInsert(r.left, key);
+            r.left = BSTInsert(r.left, key, fileName, lineNumber);
         } else if (cmp > 0) {
-        r.right = BSTInsert(r.right, key);
+            r.right = BSTInsert(r.right, key, fileName, lineNumber);
         } else {
-        r.frequency++;
-        return r;
+            r.frequency++;
+            if (fileName != null && lineNumber >= 0) {
+                if (r.List == null) r.List = new SList();
+                r.List.Insert(fileName, lineNumber);
+            }
+            return r;
         }
 
-    updateHeight(r);
-    return balanceTree(r);
+        updateHeight(r);
+        return balanceTree(r);
     }
 
 

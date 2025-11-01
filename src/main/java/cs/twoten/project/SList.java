@@ -60,6 +60,7 @@ public class SList {
         return null;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         Node cur = head;

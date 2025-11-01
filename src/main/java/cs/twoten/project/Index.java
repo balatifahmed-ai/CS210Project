@@ -10,12 +10,12 @@ public class Index {
     }
 
     public void Insert(String s) {
-        if (s == null || s.isBlank() || s.isEmpty()) return;
+        if (s == null || s.isEmpty()) return;
         root = BSTInsert(root, s, null, -1);
     }
 
     public void Insert(String s, String fileName, int lineNumber) {
-        if (s == null || s.isBlank() || s.isEmpty()) return;
+        if (s == null || s.isEmpty()) return;
         root = BSTInsert(root, s, fileName, lineNumber);
     }
 

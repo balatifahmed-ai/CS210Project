@@ -7,11 +7,12 @@ public class Solution {
         String line;
         try {
             while ((line = br.readLine()) != null) {
-                if (line == null) break;
                 line = line.trim();
                 if (line.length() == 0) continue;
                 String[] parts = splitBySpaces(line);
-                if (parts.length == 0) { System.out.println("-1"); continue; }
+                if (parts.length == 0) { 
+                    System.out.println("-1"); continue;
+                    }
                 int command;
                 try {
                     command = Integer.parseInt(parts[0]);
@@ -20,39 +21,48 @@ public class Solution {
                     continue;
                 }
 
-                if (command == 1) {
-                    if (parts.length < 2) { System.out.println("-1"); continue; }
-                    int S;
-                    try { S = Integer.parseInt(parts[1]); } catch (Exception e) { System.out.println("-1"); continue; }
-                    if (S < 0) { System.out.println("-1"); continue; }
-                    for (int i = 0; i < S; i++) {
-                        String header = br.readLine();
-                        if (header == null) { System.out.println("-1"); return; }
-                        header = header.trim();
-                        String[] hp = splitBySpaces(header);
-                        if (hp.length < 2) { System.out.println("-1"); return; }
-                        String fileName = hp[0];
-                        int N;
-                        try { N = Integer.parseInt(hp[1]); } catch (Exception e) { System.out.println("-1"); return; }
-                        if (N < 0) { System.out.println("-1"); return; }
-                        for (int ln = 1; ln <= N; ln++) {
-                            String content = br.readLine();
-                            if (content == null) { System.out.println("-1"); return; }
-                            processLineTokens(content, fileName, ln, index);
+                switch (command) {
+                    case 1 -> {
+                        if (parts.length < 2) { 
+                            System.out.println("-1"); continue; 
+                            }
+                        int S;
+                        try { S = Integer.parseInt(parts[1]); 
+                        } catch (Exception e) {
+                            System.out.println("-1"); continue; 
+                            }
+                        if (S < 0) { 
+                            System.out.println("-1"); continue; 
+                            }
+                        for (int i = 0; i < S; i++) {
+                            String header = br.readLine();
+                            if (header == null) { System.out.println("-1"); return; }
+                            header = header.trim();
+                            String[] hp = splitBySpaces(header);
+                            if (hp.length < 2) { System.out.println("-1"); return; }
+                            String fileName = hp[0];
+                            int N;
+                            try { N = Integer.parseInt(hp[1]); } catch (Exception e) { System.out.println("-1"); return; }
+                            if (N < 0) { System.out.println("-1"); return; }
+                            for (int ln = 1; ln <= N; ln++) {
+                                String content = br.readLine();
+                                if (content == null) { System.out.println("-1"); return; }
+                                processLineTokens(content, fileName, ln, index);
+                            }
                         }
                     }
-                } else if (command == 2) {
-                    if (parts.length < 2) { System.out.println("-1"); continue; }
-                    String token = parts[1];
-                    index.Search(token);
-                } else if (command == 3) {
-                    if (parts.length < 2) { System.out.println("-1"); continue; }
-                    String token = parts[1];
-                    index.Remove(token);
-                } else if (command == 4) {
-                    index.Traverse();
-                } else {
-                    System.out.println("-1");
+                    case 2 ->                         {
+                            if (parts.length < 2) { System.out.println("-1"); continue; }
+                            String token = parts[1];
+                            index.Search(token);
+                        }
+                    case 3 ->                         {
+                            if (parts.length < 2) { System.out.println("-1"); continue; }
+                            String token = parts[1];
+                            index.Remove(token);
+                        }
+                    case 4 -> index.Traverse();
+                    default -> System.out.println("-1");
                 }
             }
         } catch (java.io.IOException e) {
